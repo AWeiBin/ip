@@ -1,15 +1,16 @@
 import java.util.Scanner;
 
 public class Akari {
-    static String chatbotExpression = "o(〃＾▽＾〃)o 🕬";
-    static String[] taskList = new String[100];
+    private static String chatbotExpression;
+    private static Task[] taskList = new Task[100];
+    private static int taskCount = 0;
 
     public static void printMessageWithBorder(String message) {
         String indentedMessage = message.replaceAll("\\n", "\n    ");
         String messageWithBorder =
-                chatbotExpression + "︗".repeat(60 - chatbotExpression.length()) + "\n" +
-                        "    " + indentedMessage + "\n" +
-                        "︘".repeat(60 - 3);
+            chatbotExpression + "︗".repeat(60 - chatbotExpression.length()) + "\n" +
+            "    " + indentedMessage + "\n" +
+            "︘".repeat(60 - 3);
 
         System.out.println(messageWithBorder);
     }
@@ -18,41 +19,57 @@ public class Akari {
         boolean endChat = false;
         Scanner in = new Scanner(System.in);
         while (!endChat) {
-            String userCommand = in.nextLine();
+            String userCommand = in.nextLine().trim();
             switch (userCommand) {
             case "bye":
                 endChat = true;
                 break;
             case "list":
+                chatbotExpression = "(￣y▽￣)╭ Ohohoho.....";
                 printTaskList();
                 break;
             default:
-                chatbotExpression = "o(〃＾▽＾〃)o 🕬";
-                addTask(userCommand);
+                String[] commandParts = userCommand.split(" ", 2);
+                switch (commandParts[0]) {
+                case "mark":
+                    chatbotExpression = "໒(◔ᴗ◔)७✎▤";
+                    markTask(commandParts[1], true);
+                    break;
+                case "unmark":
+                    chatbotExpression = "(╯°□°）╯︵ ┻━┻";
+                    markTask(commandParts[1], false);
+                    break;
+                default:
+                    chatbotExpression = "o(〃＾▽＾〃)o 🕬";
+                    addTask(userCommand);
+                }
             }
         }
     }
 
     public static void addTask(String message) {
-        for (int i = 0; i < taskList.length; i++) {
-            if (taskList[i] == null) {
-                taskList[i] = message;
-                break;
-            }
-        }
+        taskList[taskCount] = new Task(message);
+        taskCount++;
         printMessageWithBorder("added: " + message);
     }
 
     public static void printTaskList() {
-        String message = "";
-        for (int i = 0; i < taskList.length; i++) {
-            if (taskList[i] == null) {
-                break;
-            } else {
-                message += i + 1 + "." + taskList[i] + "\n";
+        StringBuilder message = new StringBuilder("Here are the tasks in your list:\n");
+        for (int i = 0; i < taskCount; i++) {
+            message.append(String.format("%d.%s", i + 1, taskList[i].getPrintTaskMessage()));
+        }
+        printMessageWithBorder(message.toString().trim());
+    }
+
+    public static void markTask(String description, boolean setMark) {
+        for (int i = 0; i < taskCount; i++) {
+            if (taskList[i].description.equals(description)) {
+                taskList[i].setDone(setMark);
+                String message = setMark ? "Nice! I've marked this task as done:\n" : "OK, I've marked this task as not done yet:\n";
+                message +=  "  " + taskList[i].getPrintTaskMessage();
+                printMessageWithBorder(message);
             }
         }
-        printMessageWithBorder(message.trim());
     }
 
     public static void main(String[] args) {
