@@ -33,15 +33,15 @@ public class Akari {
                 switch (commandParts[0]) {
                 case "mark":
                     chatbotExpression = "໒(◔ᴗ◔)७✎▤";
-                    markTask(commandParts[1], true);
+                    markTask(commandParts[1].trim(), true);
                     break;
                 case "unmark":
                     chatbotExpression = "(╯°□°）╯︵ ┻━┻";
-                    markTask(commandParts[1], false);
+                    markTask(commandParts[1].trim(), false);
                     break;
                 default:
                     chatbotExpression = "o(〃＾▽＾〃)o 🕬";
-                    addTask(userCommand);
+                    addTask(userCommand.trim());
                 }
             }
         }
@@ -54,21 +54,32 @@ public class Akari {
     }
 
     public static void printTaskList() {
-        StringBuilder message = new StringBuilder("Here are the tasks in your list:\n");
+        StringBuilder message = new StringBuilder("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            message.append(String.format("%d.%s", i + 1, taskList[i].getPrintTaskMessage()));
+            message.append(String.format("\n%d.%s", i + 1, taskList[i].getPrintTaskMessage()));
         }
-        printMessageWithBorder(message.toString().trim());
+        printMessageWithBorder(message.toString());
     }
 
     public static void markTask(String description, boolean setMark) {
-        for (int i = 0; i < taskCount; i++) {
-            if (taskList[i].description.equals(description)) {
-                taskList[i].setDone(setMark);
-                String message = setMark ? "Nice! I've marked this task as done:\n" : "OK, I've marked this task as not done yet:\n";
-                message +=  "  " + taskList[i].getPrintTaskMessage();
-                printMessageWithBorder(message);
+        int taskIndex = -1;
+        try {
+            taskIndex = Integer.parseInt(description) - 1;
+        } catch (NumberFormatException e) {
+            for (int i = 0; i < taskCount; i++) {
+                if (taskList[i].description.equals(description)) {
+                    taskIndex = i;
+                }
             }
+        }
+        if (taskIndex >= 0) {
+            taskList[taskIndex].setDone(setMark);
+            String message = setMark ? "Nice! I've marked this task as done:" : "OK, I've marked this task as not done yet:";
+            message +=  "\n  " + taskList[taskIndex].getPrintTaskMessage();
+            printMessageWithBorder(message);
+        } else {
+            chatbotExpression = "( •᷄ _ •᷅ ）";
+            printMessageWithBorder("Task is not in the list");
         }
     }
 

@@ -16,6 +16,6 @@ public class Task {
     }
 
     public String getPrintTaskMessage() {
-        return String.format("[%s] %s%n", getStatusIcon(), description);
+        return String.format("[%s] %s", getStatusIcon(), description);
     }
 }
