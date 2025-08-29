@@ -18,15 +18,15 @@ public class TaskManager {
     }
 
     public static void markTask(String description, boolean setMark) {
-        int taskIndex = findTaskInTaskList(description);
-        if (taskIndex >= 0) {
+        int taskIndex = parseTaskIndex(description);
+        if (taskIndex >= 0 && taskIndex < taskCount) {
             markTaskInTaskList(taskIndex, setMark);
         } else {
             taskNotInList();
         }
     }
 
-    public static Integer findTaskInTaskList(String description) {
+    public static Integer parseTaskIndex(String description) {
         try {
             return Integer.parseInt(description) - 1;
         } catch (NumberFormatException e) {
