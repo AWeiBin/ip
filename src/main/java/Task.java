@@ -15,7 +15,7 @@ public class Task {
         return (isDone ? "X" : " ");
     }
 
-    public String getPrintTaskMessage() {
+    public String toString() {
         return String.format("[%s] %s", getStatusIcon(), description);
     }
 }
