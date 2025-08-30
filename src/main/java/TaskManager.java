@@ -67,7 +67,7 @@ public class TaskManager {
     public static void markTaskInTaskList(int taskIndex, boolean setMark) {
         taskList[taskIndex].setDone(setMark);
         String message = setMark ? "Nice! I've marked this task as done:" : "OK, I've marked this task as not done yet:";
-        message +=  "\n  " + taskList[taskIndex].toString();
+        message +=  "\n    " + taskList[taskIndex].toString();
         UI.printMessageWithBorder(message);
     }
 

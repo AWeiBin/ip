@@ -20,7 +20,7 @@ public class ExpressionHandler {
             chatbotExpression = "໒(◔ᴗ◔)७✎▤";
             break;
         case ANGRY:
-            chatbotExpression = "(╯°□°）╯︵ ┻━┻";
+            chatbotExpression = "(╯°□°）╯︵ ┻\u2501┻";
             break;
         case SAD:
             chatbotExpression = "( •᷄ _ •᷅ ）";
