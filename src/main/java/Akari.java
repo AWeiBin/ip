@@ -7,31 +7,21 @@ public class Akari {
         exitChat = true;
     }
 
-    private static void printGreetingMessage() {
-        String greetMessage =
-                "Hello! I'm " + chatbotName + "\n" +
-                        "What can I do for you?";
-        ExpressionHandler.setExpression(Expression.GREET);
-        UI.printMessageWithBorder(greetMessage);
+    public static String getChatbotName() {
+        return chatbotName;
     }
 
-    private static void printExitMessage() {
-        String exitMessage =
-                "Hope to see you again soon!";
-        ExpressionHandler.setExpression(Expression.BYE);
-        UI.printMessageWithBorder(exitMessage);
-    }
-
-    private static void readAndProcessUserCommands() {
+    private static void readAndProcessUserCommands(CommandManager commander) {
         String message = UI.readUserCommand();
-        Parser.processUserCommands(message);
+        commander.processUserCommands(message);
     }
 
     public static void main(String[] args) {
-        printGreetingMessage();
+        UI.printGreetingMessage();
+        CommandManager commander = new CommandManager();
         while (!exitChat) {
-            readAndProcessUserCommands();
+            readAndProcessUserCommands(commander);
         }
-        printExitMessage();
+        UI.printExitMessage();
     }
 }
