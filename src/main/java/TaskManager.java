@@ -3,12 +3,6 @@ public class TaskManager {
     private final Task[] taskList = new Task[MAX_TASKS];
     private int taskCount = 0;
 
-    public void addTask(String message) {
-        taskList[taskCount] = new Task(message);
-        taskCount++;
-        printAddedTaskMessage();
-    }
-
     public void addTodo(String message) {
         taskList[taskCount] = new Todo(message);
         taskCount++;

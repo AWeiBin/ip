@@ -37,8 +37,8 @@ public class CommandManager {
             addEventTask(commandDescription);
             return;
         default:
-            ExpressionHandler.setExpression(Expression.ECHO);
-            taskManager.addTask(userCommand);
+            ExpressionHandler.setExpression(Expression.SAD);
+            UI.printMessageWithBorder("Command not recognized");
         }
     }
 
@@ -52,7 +52,7 @@ public class CommandManager {
 
     private void addDeadlineTask(String commandDescription) {
         String[] descriptionAndArgument = Parser.parseDeadlineArgument(commandDescription);
-        if (descriptionAndArgument.length == 2) {
+        if (descriptionAndArgument.length == 2 && checkAllStringNotEmpty(descriptionAndArgument)) {
             taskManager.addDeadline(descriptionAndArgument[0], descriptionAndArgument[1]);
             return;
         }
@@ -61,12 +61,21 @@ public class CommandManager {
 
     public void addEventTask(String commandDescription) {
         String[] descriptionAndArgument = Parser.parseEventArgument(commandDescription);
-        if (descriptionAndArgument != null) {
+        if (descriptionAndArgument != null && checkAllStringNotEmpty(descriptionAndArgument)) {
             taskManager.addEvent(descriptionAndArgument[0], descriptionAndArgument[1], descriptionAndArgument[2]);
             return;
         }
         ExpressionHandler.setExpression(Expression.SAD);
         printMissingArgumentsInTask("event <description> /from <date> /to <date>");
+    }
+
+    private static boolean checkAllStringNotEmpty(String[] stringArray) {
+        for (String string : stringArray) {
+            if (string == null || string.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static void printMissingArgumentsInTask(String message) {
