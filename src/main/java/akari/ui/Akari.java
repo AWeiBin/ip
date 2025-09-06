@@ -1,3 +1,9 @@
+package akari.ui;
+
+import akari.command.CommandManager;
+import akari.expression.Expression;
+import akari.expression.ExpressionHandler;
+
 public class Akari {
 
     protected static String chatbotName = "Akari";

@@ -1,3 +1,11 @@
+package akari.command;
+
+import akari.ui.Akari;
+import akari.ui.AkariException;
+import akari.expression.Expression;
+import akari.expression.ExpressionHandler;
+import akari.task.TaskManager;
+
 public class CommandManager {
     private final TaskManager taskManager = new TaskManager();
 

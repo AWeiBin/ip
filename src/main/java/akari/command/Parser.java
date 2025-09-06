@@ -1,3 +1,5 @@
+package akari.command;
+
 public class Parser {
 
     private static final String BY_SEPARATOR = "/by ";

@@ -1,3 +1,8 @@
+package akari.task;
+
+import akari.ui.AkariException;
+import akari.ui.UI;
+
 public class TaskManager {
     private static final int MAX_TASKS = 100;
     private final Task[] taskList = new Task[MAX_TASKS];
