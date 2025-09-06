@@ -13,7 +13,12 @@ public class Akari {
 
     private static void readAndProcessUserCommands(CommandManager commander) {
         String message = UI.readUserCommand();
-        commander.processUserCommands(message);
+        try {
+            commander.processUserCommands(message);
+        } catch (AkariException e) {
+            ExpressionHandler.setExpression(Expression.SAD);
+            UI.printMessageWithBorder(e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
