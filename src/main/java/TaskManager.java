@@ -36,18 +36,24 @@ public class TaskManager {
         UI.printMessageWithBorder(message.toString());
     }
 
-    public void markTask(String description, boolean setMark) {
-        int taskIndex = parseTaskIndex(description);
-        if (taskIndex >= 0 && taskIndex < taskCount) {
-            markTaskInTaskList(taskIndex, setMark);
-        } else {
-            taskNotInList();
+    public void markTask(String description, boolean setMark) throws AkariException {
+        if (description.isEmpty()) {
+            throw new AkariException("Hey!! Give me the task number or description of the task you want to mark.");
         }
+        int taskIndex = parseTaskIndex(description);
+        if (taskIndex < 0 || taskIndex >= taskCount) {
+            throw new AkariException("The task is not in the list");
+        }
+        markTaskInTaskList(taskIndex, setMark);
     }
 
     private Integer parseTaskIndex(String description) {
         try {
-            return Integer.parseInt(description) - 1;
+            int taskIndex = Integer.parseInt(description) - 1;
+            if (taskIndex > taskCount - 1) {
+                return findTaskViaDescription(description);
+            }
+            return taskIndex;
         } catch (NumberFormatException e) {
             return findTaskViaDescription(description);
         }
@@ -67,10 +73,5 @@ public class TaskManager {
         String message = setMark ? "Nice! I've marked this task as done:" : "OK, I've marked this task as not done yet:";
         message += "\n    " + taskList[taskIndex].toString();
         UI.printMessageWithBorder(message);
-    }
-
-    private static void taskNotInList() {
-        ExpressionHandler.setExpression(Expression.SAD);
-        UI.printMessageWithBorder("Task is not in the list");
     }
 }

@@ -1,7 +1,9 @@
 public class CommandManager {
     private final TaskManager taskManager = new TaskManager();
 
-    public void processUserCommands(String userCommand) {
+    private static final String MISSING_ARG = "Ahhh! I can't work with missing arguments\nHere's the right format: ";
+
+    public void processUserCommands(String userCommand) throws AkariException {
         switch (userCommand) {
         case "bye":
             ExpressionHandler.setExpression(Expression.BYE);
@@ -37,49 +39,39 @@ public class CommandManager {
             addEventTask(commandDescription);
             return;
         default:
-            ExpressionHandler.setExpression(Expression.SAD);
-            UI.printMessageWithBorder("Command not recognized");
+            throw new AkariException("The command you have entered is unavailable. Please try again later.");
         }
     }
 
-    private void addTodoTask(String commandDescription) {
-        if (!commandDescription.isEmpty()) {
-            taskManager.addTodo(commandDescription);
-            return;
+    private void addTodoTask(String commandDescription) throws AkariException {
+        if (commandDescription.isEmpty()) {
+            throw new AkariException(MISSING_ARG + "todo <description>");
         }
-        printMissingArgumentsInTask("todo <description>");
+        taskManager.addTodo(commandDescription);
     }
 
-    private void addDeadlineTask(String commandDescription) {
+    private void addDeadlineTask(String commandDescription) throws AkariException {
         String[] descriptionAndArgument = Parser.parseDeadlineArgument(commandDescription);
-        if (descriptionAndArgument.length == 2 && checkAllStringNotEmpty(descriptionAndArgument)) {
-            taskManager.addDeadline(descriptionAndArgument[0], descriptionAndArgument[1]);
-            return;
+        if (descriptionAndArgument.length > 2 || checkAllStringEmpty(descriptionAndArgument)) {
+            throw new AkariException(MISSING_ARG + "deadline <description> /by <date>");
         }
-        printMissingArgumentsInTask("deadline <description> /by <date>");
+        taskManager.addDeadline(descriptionAndArgument[0], descriptionAndArgument[1]);
     }
 
-    public void addEventTask(String commandDescription) {
+    public void addEventTask(String commandDescription) throws AkariException {
         String[] descriptionAndArgument = Parser.parseEventArgument(commandDescription);
-        if (descriptionAndArgument != null && checkAllStringNotEmpty(descriptionAndArgument)) {
-            taskManager.addEvent(descriptionAndArgument[0], descriptionAndArgument[1], descriptionAndArgument[2]);
-            return;
+        if (descriptionAndArgument == null || checkAllStringEmpty(descriptionAndArgument)) {
+            throw new AkariException(MISSING_ARG + "event <description> /from <date> /to <date>");
         }
-        ExpressionHandler.setExpression(Expression.SAD);
-        printMissingArgumentsInTask("event <description> /from <date> /to <date>");
+        taskManager.addEvent(descriptionAndArgument[0], descriptionAndArgument[1], descriptionAndArgument[2]);
     }
 
-    private static boolean checkAllStringNotEmpty(String[] stringArray) {
+    private static boolean checkAllStringEmpty(String[] stringArray) {
         for (String string : stringArray) {
             if (string == null || string.isEmpty()) {
-                return false;
+                return true;
             }
         }
-        return true;
-    }
-
-    private static void printMissingArgumentsInTask(String message) {
-        ExpressionHandler.setExpression(Expression.SAD);
-        UI.printMessageWithBorder("Arguments missing\n" + message);
+        return false;
     }
 }
