@@ -3,53 +3,66 @@ package akari.task;
 import akari.ui.AkariException;
 import akari.ui.UI;
 
+import java.util.ArrayList;
+
 public class TaskManager {
-    private static final int MAX_TASKS = 100;
-    private final Task[] taskList = new Task[MAX_TASKS];
+    private final ArrayList<Task> taskList = new ArrayList<>();
     private int taskCount = 0;
 
     public void addTodo(String message) {
-        taskList[taskCount] = new Todo(message);
+        taskList.add(new Todo(message));
+        printAddedTaskMessage(true, taskCount);
         taskCount++;
-        printAddedTaskMessage();
     }
 
     public void addDeadline(String description, String by) {
-        taskList[taskCount] = new Deadline(description, by);
+        taskList.add(new Deadline(description, by));
+        printAddedTaskMessage(true, taskCount);
         taskCount++;
-        printAddedTaskMessage();
     }
 
     public void addEvent(String message, String from, String to) {
-        taskList[taskCount] = new Event(message, from, to);
+        taskList.add(new Event(message, from, to));
+        printAddedTaskMessage(true, taskCount);
         taskCount++;
-        printAddedTaskMessage();
     }
 
-    public void printAddedTaskMessage() {
-        String message = "Got it. I've added this task:\n" +
-                "    " + taskList[taskCount - 1].toString() + "\n" +
-                "Now you have " + taskCount + " in the list";
+    public void deleteTask(String description) throws AkariException {
+        int taskIndex = getValidatedTaskIndex(description);
+        printAddedTaskMessage(false, taskIndex);
+        taskList.remove(taskIndex);
+        taskCount--;
+    }
+
+    public void printAddedTaskMessage(boolean isAddTask, int taskIndex) {
+        String message = "Got it. I've " + (isAddTask ? "added" : "removed") + " this task:\n" +
+                "    " + taskList.get(taskIndex).toString() + "\n" +
+                "Now you have " + (taskCount + (isAddTask ? 1 : -1)) + " in the list";
         UI.printMessageWithBorder(message);
     }
 
     public void printTaskList() {
         StringBuilder message = new StringBuilder("Here are the tasks in your list:");
         for (int i = 0; i < taskCount; i++) {
-            message.append(String.format("\n%d.%s", i + 1, taskList[i].toString()));
+            message.append(String.format("\n%d.%s", i + 1, taskList.get(i).toString()));
         }
         UI.printMessageWithBorder(message.toString());
     }
 
     public void markTask(String description, boolean setMark) throws AkariException {
+        int taskIndex = getValidatedTaskIndex(description);
+        markTaskInTaskList(taskIndex, setMark);
+    }
+
+    private int getValidatedTaskIndex(String description) throws AkariException {
         if (description.isEmpty()) {
-            throw new AkariException("Hey!! Give me the task number or description of the task you want to mark.");
+            throw new AkariException("Hey!! Give me the task number or description of the task.");
         }
         int taskIndex = parseTaskIndex(description);
         if (taskIndex < 0 || taskIndex >= taskCount) {
             throw new AkariException("The task is not in the list");
         }
-        markTaskInTaskList(taskIndex, setMark);
+        return taskIndex;
     }
 
     private Integer parseTaskIndex(String description) {
@@ -66,7 +79,7 @@ public class TaskManager {
 
     private Integer findTaskViaDescription(String description) {
         for (int i = 0; i < taskCount; i++) {
-            if (taskList[i].description.equals(description)) {
+            if (taskList.get(i).description.equals(description)) {
                 return i;
             }
         }
@@ -74,9 +87,9 @@ public class TaskManager {
     }
 
     private void markTaskInTaskList(int taskIndex, boolean setMark) {
-        taskList[taskIndex].setDone(setMark);
+        taskList.get(taskIndex).setDone(setMark);
         String message = setMark ? "Nice! I've marked this task as done:" : "OK, I've marked this task as not done yet:";
-        message += "\n    " + taskList[taskIndex].toString();
+        message += "\n    " + taskList.get(taskIndex).toString();
         UI.printMessageWithBorder(message);
     }
 }

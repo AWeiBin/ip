@@ -27,6 +27,9 @@ public class ExpressionHandler {
         case SAD:
             chatbotExpression = "( •᷄ _ •᷅ ）";
             break;
+        case PROUD:
+            chatbotExpression = "ᕦ(ò_óˇ)ᕤ";
+            break;
         default:
             chatbotExpression = "._.";
         }
