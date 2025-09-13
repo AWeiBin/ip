@@ -1,7 +1,10 @@
 package akari.task;
 
+import akari.storage.Serialiser;
 import akari.ui.AkariException;
 import akari.ui.UI;
+
+import java.util.ArrayList;
 
 public class TaskManager {
     private static final int MAX_TASKS = 100;
@@ -78,5 +81,46 @@ public class TaskManager {
         String message = setMark ? "Nice! I've marked this task as done:" : "OK, I've marked this task as not done yet:";
         message += "\n    " + taskList[taskIndex].toString();
         UI.printMessageWithBorder(message);
+    }
+
+    public String getSerialisedTaskList() {
+        StringBuilder message = new StringBuilder();
+        for (int i = 0; i < taskCount; i++) {
+            message.append(String.format(taskList[i].toStringSerialised() + "\n"));
+        }
+        return message.toString();
+    }
+
+    public void loadTaskList(ArrayList<String> rawTaskList) {
+        ArrayList<ArrayList<String>> deserialiseTaskList = Serialiser.deserialiseList(rawTaskList);
+        for (ArrayList<String> task : deserialiseTaskList) {
+            switch (task.get(0)) {
+            case "T":
+                if (task.size() == 3) {
+                    Task newTask = new Todo(task.get(2));
+                    markLoadedTask(newTask, task.get(1));
+                }
+                break;
+            case "D":
+                if (task.size() == 4) {
+                    Task newTask = new Deadline(task.get(2), task.get(3));
+                    markLoadedTask(newTask, task.get(1));
+                }
+                break;
+            case "E":
+                if (task.size() == 5) {
+                    Task newTask = new Event(task.get(2), task.get(3), task.get(4));
+                    markLoadedTask(newTask, task.get(1));
+                }
+                break;
+            default:
+            }
+        }
+    }
+
+    public void markLoadedTask(Task task, String setMark) {
+        task.setDone(setMark.equals("1"));
+        taskList[taskCount] = task;
+        taskCount++;
     }
 }

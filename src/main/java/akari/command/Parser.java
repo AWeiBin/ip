@@ -28,9 +28,9 @@ public class Parser {
     public static String[] parseEventArgument(String commandDescription) {
         int fromIndex = commandDescription.indexOf(FROM_SEPARATOR);
         int toIndex = commandDescription.indexOf(TO_SEPARATOR);
-        String description = "";
-        String from = "";
-        String to = "";
+        String description;
+        String from;
+        String to;
         if (fromIndex == -1 || toIndex == -1) {
             return null;
         }
