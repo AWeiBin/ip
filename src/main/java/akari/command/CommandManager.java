@@ -46,6 +46,10 @@ public class CommandManager {
             ExpressionHandler.setExpression(Expression.ECHO);
             addEventTask(commandDescription);
             return;
+        case "delete":
+            ExpressionHandler.setExpression(Expression.PROUD);
+            taskManager.deleteTask(commandDescription);
+            return;
         default:
             throw new AkariException("The command you have entered is unavailable. Please try again later.");
         }
