@@ -5,11 +5,23 @@ import akari.ui.AkariException;
 import akari.expression.Expression;
 import akari.expression.ExpressionHandler;
 import akari.task.TaskManager;
+import akari.storage.LocalSave;
+
+import java.util.ArrayList;
 
 public class CommandManager {
     private final TaskManager taskManager = new TaskManager();
 
     private static final String MISSING_ARG = "Ahhh! I can't work with missing arguments\nHere's the right format: ";
+
+    public CommandManager() {
+        ArrayList<String> savedTaskList = LocalSave.readTaskListFromFile();
+        if (savedTaskList == null) {
+            return;
+        }
+        taskManager.loadTaskList(savedTaskList);
+        taskManager.printTaskList();
+    }
 
     public void processUserCommands(String userCommand) throws AkariException {
         switch (userCommand) {
@@ -29,30 +41,31 @@ public class CommandManager {
         case "mark":
             ExpressionHandler.setExpression(Expression.FOCUS);
             taskManager.markTask(commandDescription, true);
-            return;
+            break;
         case "unmark":
             ExpressionHandler.setExpression(Expression.ANGRY);
             taskManager.markTask(commandDescription, false);
-            return;
+            break;
         case "todo":
             ExpressionHandler.setExpression(Expression.ECHO);
             addTodoTask(commandDescription);
-            return;
+            break;
         case "deadline":
             ExpressionHandler.setExpression(Expression.ECHO);
             addDeadlineTask(commandDescription);
-            return;
+            break;
         case "event":
             ExpressionHandler.setExpression(Expression.ECHO);
             addEventTask(commandDescription);
-            return;
+            break;
         case "delete":
             ExpressionHandler.setExpression(Expression.PROUD);
             taskManager.deleteTask(commandDescription);
-            return;
+            break;
         default:
             throw new AkariException("The command you have entered is unavailable. Please try again later.");
         }
+        LocalSave.saveTaskListToFile(taskManager.getSerialisedTaskList());
     }
 
     private void addTodoTask(String commandDescription) throws AkariException {
@@ -64,7 +77,7 @@ public class CommandManager {
 
     private void addDeadlineTask(String commandDescription) throws AkariException {
         String[] descriptionAndArgument = Parser.parseDeadlineArgument(commandDescription);
-        if (descriptionAndArgument.length > 2 || checkAllStringEmpty(descriptionAndArgument)) {
+        if (descriptionAndArgument.length != 2 || checkAllStringEmpty(descriptionAndArgument)) {
             throw new AkariException(MISSING_ARG + "deadline <description> /by <date>");
         }
         taskManager.addDeadline(descriptionAndArgument[0], descriptionAndArgument[1]);
@@ -73,7 +86,7 @@ public class CommandManager {
     public void addEventTask(String commandDescription) throws AkariException {
         String[] descriptionAndArgument = Parser.parseEventArgument(commandDescription);
         if (descriptionAndArgument == null || checkAllStringEmpty(descriptionAndArgument)) {
-            throw new AkariException(MISSING_ARG + "event <description> /from <date> /to <date>");
+            throw new AkariException(MISSING_ARG + "event <description> /from <date startTime> /to <endTime>");
         }
         taskManager.addEvent(descriptionAndArgument[0], descriptionAndArgument[1], descriptionAndArgument[2]);
     }
