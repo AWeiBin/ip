@@ -45,6 +45,8 @@ public class Parser {
             return new DeleteParser();
         case DateParser.COMMAND_WORD:
             return new DateParser();
+        case FindParser.COMMAND_WORD:
+            return new FindParser();
         default:
             throw new AkariException("The command you have entered is unavailable. Please try again later.");
         }
