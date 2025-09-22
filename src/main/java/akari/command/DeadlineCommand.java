@@ -9,12 +9,14 @@ import akari.task.TaskList;
 import akari.ui.AkariException;
 import akari.ui.Ui;
 
+import java.time.LocalDateTime;
+
 public class DeadlineCommand extends Command {
     public String description;
-    public String by;
+    public LocalDateTime by;
     private Task task;
 
-    public DeadlineCommand(String description, String by) throws AkariException {
+    public DeadlineCommand(String description, LocalDateTime by) throws AkariException {
         this.description = description;
         this.by = by;
     }

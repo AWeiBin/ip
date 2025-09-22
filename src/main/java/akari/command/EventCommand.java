@@ -9,13 +9,15 @@ import akari.task.TaskList;
 import akari.ui.AkariException;
 import akari.ui.Ui;
 
+import java.time.LocalDateTime;
+
 public class EventCommand extends Command {
     public String description;
-    public String from;
-    public String to;
+    public LocalDateTime from;
+    public LocalDateTime to;
     private Task task;
 
-    public EventCommand(String description, String from, String to) {
+    public EventCommand(String description, LocalDateTime from, LocalDateTime to) {
         this.description = description;
         this.from = from;
         this.to = to;

@@ -4,6 +4,7 @@ import akari.command.EventCommand;
 import akari.task.Event;
 import akari.ui.AkariException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class EventParser extends Parser {
@@ -11,7 +12,8 @@ public class EventParser extends Parser {
     protected static final String COMMAND_ICON = "E";
     private static final String FROM_SEPARATOR = "/from ";
     private static final String TO_SEPARATOR = "/to ";
-    private static final String ERROR_MESSAGE = MISSING_ARG + COMMAND_WORD + " <description> " + FROM_SEPARATOR + " <date startTime> " + TO_SEPARATOR + " <endTime>";
+    private static final String ERROR_MESSAGE = MISSING_ARG + COMMAND_WORD + " <description> " + FROM_SEPARATOR + "<date startTime> " + TO_SEPARATOR + "<endTime>";
+    private static final String DATE_ERROR_MESSAGE = "From date time is before To date time";
 
     @Override
     protected EventCommand parseAndCreateCommand() throws AkariException {
@@ -24,7 +26,12 @@ public class EventParser extends Parser {
         if (description.isEmpty() || from.isEmpty() || to.isEmpty()) {
             throw new AkariException(ERROR_MESSAGE);
         }
-        return new EventCommand(description, from, to);
+        LocalDateTime fromDate = parseDateTime(from);
+        LocalDateTime toDate = parseDateTime(to);
+        if (fromDate.isAfter(toDate)) {
+            throw new AkariException(DATE_ERROR_MESSAGE);
+        }
+        return new EventCommand(description, parseDateTime(from), parseDateTime(to));
     }
 
     private boolean determineIsFromBeforeTo() throws AkariException {
@@ -36,10 +43,10 @@ public class EventParser extends Parser {
         return fromIndex < toIndex;
     }
 
-    protected Event parseAndCreateTask(ArrayList<String> taskArguments) {
+    protected Event parseAndCreateTask(ArrayList<String> taskArguments) throws AkariException {
         if (taskArguments.size() != 5) {
             return null;
         }
-        return new Event(taskArguments.get(2), taskArguments.get(3), taskArguments.get(4));
+        return new Event(taskArguments.get(2), parseDateTime(taskArguments.get(3)), parseDateTime(taskArguments.get(4)));
     }
 }

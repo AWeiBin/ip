@@ -4,12 +4,16 @@ import akari.command.Command;
 import akari.task.Task;
 import akari.ui.AkariException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class Parser {
 
     protected static final String EXTRA_ARG = "Ahhh! Too many arguments\nHere's the right format: ";
     protected static final String MISSING_ARG = "Ahhh! I can't work with missing arguments\nHere's the right format: ";
+    protected static final String DATETIME_ERROR_MESSAGE = "Here's the right format: <yyyy-mm-dd>T<hh:mm>";
 
     protected static String commandDescription;
 
@@ -39,6 +43,8 @@ public class Parser {
             return new EventParser();
         case DeleteParser.COMMAND_WORD:
             return new DeleteParser();
+        case DateParser.COMMAND_WORD:
+            return new DateParser();
         default:
             throw new AkariException("The command you have entered is unavailable. Please try again later.");
         }
@@ -82,5 +88,21 @@ public class Parser {
 
     protected Task parseAndCreateTask(ArrayList<String> taskArguments) throws AkariException {
         throw new AkariException("This method is to be implemented by child classes");
+    }
+
+    protected LocalDateTime parseDateTime(String dateTime) throws AkariException {
+        try {
+            return LocalDateTime.parse(dateTime);
+        } catch (DateTimeParseException e) {
+            throw new AkariException(DATETIME_ERROR_MESSAGE);
+        }
+    }
+
+    protected LocalDate parseDate(String date) throws AkariException {
+        try {
+            return LocalDate.parse(date);
+        } catch (DateTimeParseException  e) {
+            throw new AkariException(DateParser.ERROR_MESSAGE);
+        }
     }
 }
