@@ -38,4 +38,8 @@ public abstract class Task {
     protected String formatDateTime(LocalDateTime dateTime) {
         return dateTime.format(DATETIME_FORMAT);
     }
+
+    public boolean isDescription(String target) {
+        return description.equals(target);
+    }
 }
