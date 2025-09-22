@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public class Serialiser {
     private static final String DELIMITER = "#";
+    private static final String EXTRA_DELIMITER = "|";
 
     public static String serialiseMessage(String message) {
-        return message.length() + DELIMITER + message;
+        return message.length() + DELIMITER + message + EXTRA_DELIMITER;
     }
 
     public static ArrayList<ArrayList<String>> deserialiseList(ArrayList<String> serialisedList) {
@@ -25,12 +26,14 @@ public class Serialiser {
 
         while (currentIndex < serialisedTaskLength) {
             int delimiterIndex = serialisedMessage.indexOf(DELIMITER, currentIndex);
-            if (delimiterIndex == -1) {
+            boolean isDelimiterMissing = delimiterIndex == -1;
+            if (isDelimiterMissing) {
                 break;
             }
 
             int argumentLength = parseArgumentLength(serialisedMessage, currentIndex, delimiterIndex);
-            if (argumentLength == -1) {
+            boolean isArgumentLengthCorrupted = argumentLength == -1;
+            if (isArgumentLengthCorrupted) {
                 break;
             }
 
@@ -42,7 +45,7 @@ public class Serialiser {
 
             String argument = serialisedMessage.substring(currentIndex, nextIndex);
             message.add(argument);
-            currentIndex = nextIndex;
+            currentIndex = nextIndex + 1;
         }
 
         return message;

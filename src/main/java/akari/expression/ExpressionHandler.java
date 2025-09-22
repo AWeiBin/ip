@@ -4,6 +4,10 @@ public class ExpressionHandler {
 
     private static String chatbotExpression;
 
+    public static String getExpression() {
+        return chatbotExpression;
+    }
+
     public static void setExpression(Expression expression) {
         switch (expression) {
         case GREET:
@@ -33,9 +37,5 @@ public class ExpressionHandler {
         default:
             chatbotExpression = "._.";
         }
-    }
-
-    public static String getExpression() {
-        return chatbotExpression;
     }
 }

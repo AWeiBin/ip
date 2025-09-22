@@ -9,15 +9,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class LocalSave {
+public class Storage {
 
-    private static final String FILEPATH = "./data/akari.txt";
+    private final String filePath;
 
-    public static void ensureFileDirectoryExist() {
-        new File(FILEPATH).getParentFile().mkdirs();
+    public Storage(String filePath) {
+        this.filePath = filePath;
     }
 
-    public static ArrayList<String> readTaskListFromFile() {
+    public void ensureFileDirectoryExist() {
+        new File(filePath).getParentFile().mkdirs();
+    }
+
+    public ArrayList<String> load() {
         try {
             ensureFileDirectoryExist();
             return readFromFile();
@@ -26,8 +30,8 @@ public class LocalSave {
         }
     }
 
-    private static ArrayList<String> readFromFile() throws FileNotFoundException {
-        File file = new File(FILEPATH);
+    private ArrayList<String> readFromFile() throws FileNotFoundException {
+        File file = new File(filePath);
         Scanner s = new Scanner(file);
         ArrayList<String> rawTaskList = new ArrayList<>();
         while (s.hasNext()) {
@@ -36,7 +40,7 @@ public class LocalSave {
         return rawTaskList;
     }
 
-    public static void saveTaskListToFile(String textToAdd) throws AkariException {
+    public void saveTaskListToFile(String textToAdd) throws AkariException {
         try {
             ensureFileDirectoryExist();
             writeToFile(textToAdd);
@@ -45,8 +49,8 @@ public class LocalSave {
         }
     }
 
-    private static void writeToFile(String textToAdd) throws IOException {
-        FileWriter fileWriter = new FileWriter(FILEPATH);
+    private void writeToFile(String textToAdd) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath);
         fileWriter.write(textToAdd);
         fileWriter.close();
     }

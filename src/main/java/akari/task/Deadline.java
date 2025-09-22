@@ -2,7 +2,7 @@ package akari.task;
 
 import akari.storage.Serialiser;
 
-public class Deadline extends Task{
+public class Deadline extends Task {
 
     protected String by;
 

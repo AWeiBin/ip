@@ -2,7 +2,7 @@ package akari.task;
 
 import akari.storage.Serialiser;
 
-public class Todo extends Task{
+public class Todo extends Task {
 
     protected String by;
 
