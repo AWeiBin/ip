@@ -13,7 +13,7 @@ public class Parser {
 
     protected static final String EXTRA_ARG = "Ahhh! Too many arguments\nHere's the right format: ";
     protected static final String MISSING_ARG = "Ahhh! I can't work with missing arguments\nHere's the right format: ";
-    protected static final String DATETIME_ERROR_MESSAGE = "Here's the right format: <yyyy-mm-dd>T<hh:mm>";
+    protected static final String DATETIME_ERROR_MESSAGE = "Here's the right datetime format: <yyyy-mm-dd>T<hh:mm>";
 
     protected static String commandDescription;
 
