@@ -30,11 +30,12 @@ public class FindCommand extends Command {
 
     @Override
     public void showResult(TaskList taskList, Ui ui, Storage storage) {
-        ExpressionHandler.setExpression(Expression.PROUD);
         if  (tasks.isEmpty()) {
+            ExpressionHandler.setExpression(Expression.SAD);
             ui.printMessageWithBorder("There are no matching tasks in your list");
             return;
         }
+        ExpressionHandler.setExpression(Expression.PROUD);
         StringBuilder message = new StringBuilder("Here are the matching tasks in your list:");
         for (Task task : tasks) {
             message.append("\n").append(task.toString());
