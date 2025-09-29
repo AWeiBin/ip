@@ -9,6 +9,11 @@ import akari.task.TaskList;
 import akari.ui.AkariException;
 import akari.ui.Ui;
 
+
+/**
+ * Entry point of the Akari chatbot.
+ * Initializes the application and starts the interaction with the user.
+ */
 public class Akari {
 
     private static final String FILE_PATH = "data/tasks.txt";
@@ -17,6 +22,9 @@ public class Akari {
     private TaskList tasks;
     private final Ui ui;
 
+    /**
+     * Sets up the required objects, and load storage data into task list.
+     */
     public Akari(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -32,10 +40,16 @@ public class Akari {
         new Akari(FILE_PATH).run();
     }
 
+    /**
+     * Set exit flag to terminate the program
+     */
     public static void setExitChat() {
         hasExitChat = true;
     }
 
+    /**
+     * Runs the program until termination.
+     */
     public void run() {
         ui.printGreetingMessage();
         while (!hasExitChat) {

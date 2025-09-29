@@ -3,6 +3,11 @@ package akari.parser;
 import akari.command.MarkCommand;
 import akari.ui.AkariException;
 
+/**
+ * Parse arguments to satisfy MarkCommand
+ *
+ * @throws AkariException if commands does not have the expected arguments
+ */
 public class MarkParser extends Parser {
 
     protected static final String COMMAND_WORD = "mark";

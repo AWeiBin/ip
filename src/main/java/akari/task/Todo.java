@@ -2,6 +2,10 @@ package akari.task;
 
 import akari.storage.Serialiser;
 
+/**
+ * Represents a Todo Task in the TaskList.
+ * Guarantees: details are present and not null, field values are validated.
+ */
 public class Todo extends Task {
 
     protected String by;

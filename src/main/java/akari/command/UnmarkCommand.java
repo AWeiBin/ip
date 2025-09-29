@@ -8,6 +8,9 @@ import akari.task.TaskList;
 import akari.ui.AkariException;
 import akari.ui.Ui;
 
+/**
+ * Unmark task in TaskList.
+ */
 public class UnmarkCommand extends Command {
     public String description;
     private Task task;

@@ -11,6 +11,9 @@ import akari.ui.Ui;
 
 import java.time.LocalDateTime;
 
+/**
+ * Add Event task into TaskList.
+ */
 public class EventCommand extends Command {
     public String description;
     public LocalDateTime from;

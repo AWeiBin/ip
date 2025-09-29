@@ -3,6 +3,11 @@ package akari.parser;
 import akari.command.FindCommand;
 import akari.ui.AkariException;
 
+/**
+ * Parse arguments to satisfy FindCommand
+ *
+ * @throws AkariException if commands does not have the expected arguments
+ */
 public class FindParser extends Parser {
 
     protected static final String COMMAND_WORD = "find";

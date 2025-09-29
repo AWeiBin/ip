@@ -3,6 +3,11 @@ package akari.parser;
 import akari.command.ListCommand;
 import akari.ui.AkariException;
 
+/**
+ * Parse arguments to satisfy ListCommand
+ *
+ * @throws AkariException if commands does not have the expected arguments
+ */
 public class ListParser extends Parser {
 
     protected static final String COMMAND_WORD = "list";

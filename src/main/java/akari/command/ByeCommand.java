@@ -6,6 +6,9 @@ import akari.task.TaskList;
 import akari.ui.AkariException;
 import akari.ui.Ui;
 
+/**
+ * Terminates the program.
+ */
 public class ByeCommand extends Command {
     public ByeCommand() {
     }

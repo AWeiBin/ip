@@ -6,6 +6,11 @@ import akari.ui.AkariException;
 
 import java.util.ArrayList;
 
+/**
+ * Parse arguments to satisfy TdoCommand
+ *
+ * @throws AkariException if commands does not have the expected arguments
+ */
 public class TodoParser extends Parser {
 
     protected static final String COMMAND_WORD = "todo";

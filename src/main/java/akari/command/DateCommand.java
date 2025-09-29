@@ -13,6 +13,9 @@ import akari.ui.Ui;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Find task with or within given date
+ */
 public class DateCommand extends Command {
     public LocalDate description;
     private ArrayList<Task> tasks = new ArrayList<>();

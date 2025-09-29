@@ -3,6 +3,11 @@ package akari.parser;
 import akari.command.UnmarkCommand;
 import akari.ui.AkariException;
 
+/**
+ * Parse arguments to satisfy UnmarkCommand
+ *
+ * @throws AkariException if commands does not have the expected arguments
+ */
 public class UnmarkParser extends Parser {
 
     protected static final String COMMAND_WORD = "unmark";

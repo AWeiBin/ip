@@ -7,6 +7,11 @@ import akari.ui.AkariException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * Parse arguments to satisfy EventCommand
+ *
+ * @throws AkariException if commands does not have the expected arguments
+ */
 public class EventParser extends Parser {
     protected static final String COMMAND_WORD = "event";
     protected static final String COMMAND_ICON = "E";

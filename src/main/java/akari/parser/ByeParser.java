@@ -3,6 +3,11 @@ package akari.parser;
 import akari.command.ByeCommand;
 import akari.ui.AkariException;
 
+/**
+ * Parse arguments to satisfy ByeCommand
+ *
+ * @throws AkariException if commands does not have the expected arguments
+ */
 public class ByeParser extends Parser {
 
     protected static final String COMMAND_WORD = "bye";

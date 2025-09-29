@@ -9,6 +9,9 @@ import akari.task.Todo;
 import akari.ui.AkariException;
 import akari.ui.Ui;
 
+/**
+ * Add Todo task into TaskList.
+ */
 public class TodoCommand extends Command {
     public String description;
     private Task task;
