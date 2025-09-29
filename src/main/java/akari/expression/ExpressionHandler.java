@@ -1,5 +1,8 @@
 package akari.expression;
 
+/**
+ * Represent the chatbot expression
+ */
 public class ExpressionHandler {
 
     private static String chatbotExpression;

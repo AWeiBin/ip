@@ -11,6 +11,9 @@ import akari.ui.Ui;
 
 import java.time.LocalDateTime;
 
+/**
+ * Add Deadline task into TaskList.
+ */
 public class DeadlineCommand extends Command {
     public String description;
     public LocalDateTime by;

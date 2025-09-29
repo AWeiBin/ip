@@ -5,6 +5,9 @@ import akari.expression.ExpressionHandler;
 
 import java.util.Scanner;
 
+/**
+ * Read and Print text to the console
+ */
 public class Ui {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final Integer BORDER_LENGTH = 60;
@@ -14,6 +17,11 @@ public class Ui {
     private static final String BYE = "Hope to see you again soon!";
     private static final String LOADING_ERROR = "Unable to load local saved file";
 
+    /**
+     * Print the message nicely within the border
+     *
+     * @param message string to be shown to the user
+     */
     public void printMessageWithBorder(String message) {
         String indentedMessage = message.replaceAll("\\n", "\n    ");
         System.out.println(ExpressionHandler.getExpression() + TOP_BORDER + "\n" +
@@ -35,6 +43,9 @@ public class Ui {
         return SCANNER.nextLine().trim();
     }
 
+    /**
+     * Print message when loading from storage file failed
+     */
     public void showLoadingError() {
         ExpressionHandler.setExpression(Expression.ANGRY);
         printMessageWithBorder(LOADING_ERROR);

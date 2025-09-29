@@ -3,6 +3,11 @@ package akari.parser;
 import akari.command.DeleteCommand;
 import akari.ui.AkariException;
 
+/**
+ * Parse arguments to satisfy DeleteCommand
+ *
+ * @throws AkariException if commands does not have the expected arguments
+ */
 public class DeleteParser extends Parser {
 
     protected static final String COMMAND_WORD = "delete";

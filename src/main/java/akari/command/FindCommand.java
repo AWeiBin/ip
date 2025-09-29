@@ -10,10 +10,12 @@ import akari.ui.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * Find task in TaskList
+ */
 public class FindCommand extends Command {
     public String description;
     private ArrayList<Task> tasks = new ArrayList<>();
-
 
     public FindCommand(String description) {
         this.description = description;

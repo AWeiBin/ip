@@ -17,10 +17,17 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Create the folders to the file
+     */
     public void ensureFileDirectoryExist() {
         new File(filePath).getParentFile().mkdirs();
     }
 
+    /**
+     * Read the file in filePath into a list
+     * @return the file string in list else null if FileNotFoundException
+     */
     public ArrayList<String> load() {
         try {
             ensureFileDirectoryExist();
@@ -40,6 +47,12 @@ public class Storage {
         return rawTaskList;
     }
 
+    /**
+     * Save the TaskList into the file in filePath
+     *
+     * @param textToAdd text to be added into the file
+     * @throws AkariException unable to write to the file
+     */
     public void saveTaskListToFile(String textToAdd) throws AkariException {
         try {
             ensureFileDirectoryExist();

@@ -6,13 +6,26 @@ import akari.ui.AkariException;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the entire TaskList. Contains the data of the TaskList.
+ */
 public class TaskList {
-    private final ArrayList<Task> taskList = new ArrayList<>();
+    private final ArrayList<Task> taskList;
 
+    /**
+     * Creates an empty TaskList.
+     */
     public TaskList() {
+        taskList = new ArrayList<>();
     }
 
+    /**
+     * Creates an empty TaskList and add task based on storage data
+     *
+     * @param rawTaskList task list from storage file
+     */
     public TaskList(ArrayList<String> rawTaskList) throws AkariException {
+        taskList = new ArrayList<>();
         if (rawTaskList == null) {
             throw new AkariException();
         }
@@ -36,6 +49,12 @@ public class TaskList {
         return taskList.size();
     }
 
+    /**
+     * Get task based on task index
+     *
+     * @param taskIndex input task index
+     * @return the task
+     */
     public Task getTask(int taskIndex) {
         return taskList.get(taskIndex);
     }
@@ -44,6 +63,14 @@ public class TaskList {
         return taskList;
     }
 
+    /**
+     * Get task index based on input description
+     * If parse input description into integer failed, compare input description with task description
+     *
+     * @param description input description
+     * @return the task index
+     * @throws AkariException if task is not in the list
+     */
     public int getValidatedTaskIndex(String description) throws AkariException {
         int taskIndex = parseTaskIndex(description);
         if (taskIndex < 0 || taskIndex >= getTaskCount()) {

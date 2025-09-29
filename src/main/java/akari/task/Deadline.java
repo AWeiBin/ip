@@ -5,6 +5,10 @@ import akari.storage.Serialiser;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+/**
+ * Represents a Deadline Task in the TaskList.
+ * Guarantees: details are present and not null, field values are validated.
+ */
 public class Deadline extends Task {
     protected LocalDateTime by;
 
@@ -13,6 +17,12 @@ public class Deadline extends Task {
         this.by = by;
     }
 
+    /**
+     * Return true if the input date is the same as the Task.
+     *
+     * @param target date
+     * @return true if input date same as Task.
+     */
     public boolean isBy(LocalDate target) {
         return target.equals(by.toLocalDate());
     }

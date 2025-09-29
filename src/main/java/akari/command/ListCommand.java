@@ -7,6 +7,9 @@ import akari.task.TaskList;
 import akari.ui.AkariException;
 import akari.ui.Ui;
 
+/**
+ * Lists all persons in the TaskList to the user.
+ */
 public class ListCommand extends Command {
     public ListCommand() {
     }

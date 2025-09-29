@@ -9,14 +9,24 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
+/**
+ * Lists all persons in the TaskList to the user.
+ */
 public class Parser {
 
     protected static final String EXTRA_ARG = "Ahhh! Too many arguments\nHere's the right format: ";
     protected static final String MISSING_ARG = "Ahhh! I can't work with missing arguments\nHere's the right format: ";
-    protected static final String DATETIME_ERROR_MESSAGE = "Here's the right datetime format: <yyyy-mm-dd>T<hh:mm>";
+    protected static final String DATETIME_ERROR_MESSAGE = "Here's the right format: <yyyy-mm-dd>T<hh:mm>";
 
     protected static String commandDescription;
 
+    /**
+     * Parse user input to command
+     *
+     * @param userCommand user input command
+     * @return the command
+     * @throws AkariException if parseAndCreateCommand throws an exception
+     */
     public Command parseCommand(String userCommand) throws AkariException {
         Parser commandParser = selectParser(userCommand);
         return commandParser.parseAndCreateCommand();
@@ -52,6 +62,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Parse TaskList from storage to task
+     *
+     * @param taskArguments TaskList from storage
+     * @return the task
+     * @throws AkariException if parseAndCreateCommand throws an exception
+     */
     public Task parseAddTask(ArrayList<String> taskArguments) throws AkariException {
         Parser taskParser = selectAddParser(taskArguments.get(0));
         return taskParser.parseAndCreateTask(taskArguments);

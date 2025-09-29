@@ -6,6 +6,11 @@ import akari.ui.AkariException;
 
 import java.util.ArrayList;
 
+/**
+ * Parse arguments to satisfy DeadlineCommand
+ *
+ * @throws AkariException if commands does not have the expected arguments
+ */
 public class DeadlineParser extends Parser {
     protected static final String COMMAND_WORD = "deadline";
     protected static final String COMMAND_ICON = "D";

@@ -5,6 +5,10 @@ import akari.storage.Serialiser;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a Task in the TaskList, to be overridden by subclass.
+ * Guarantees: details are present and not null, field values are validated.
+ */
 public abstract class Task {
     protected String description;
     protected boolean isDone;
